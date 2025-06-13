@@ -1,0 +1,114 @@
+STEP 1:
+JAVA INSTALATION
+      sudo apt update
+      sudo apt install openjdk-17-jdk -y
+      java -version
+
+
+STEP 2:
+CHANGE THE DIRECTORY AND INSTALL NEXUS
+      cd /opt
+      sudo wget https://download.sonatype.com/nexus/3/nexus-3.81.1-01-linux-x86_64.tar.gz
+      sudo tar -xvzf nexus-3.81.1-01-linux-x86_64.tar.gz
+      sudo mv nexus-3.81.1-01 /opt/nexus
+
+
+STEP 3:
+ADD USER FOR NEXUS
+   	sudo adduser nexus
+   	sudo visudo
+          nexus ALL=(ALL) NOPASSWD: ALL
+
+STEP 4:
+CHANGE PERMISSIONS
+
+     sudo chown -R nexus:nexus /opt/nexus
+     sudo chown -R nexus:nexus /opt/sonatype-work
+     sudo nano /opt/nexus/bin/nexus.rc
+		run_as_user="nexus"
+
+STEP 5:
+MAXIMIZE THE STORAGE
+   	sudo nano /opt/nexus/bin/nexus.vmoptions
+		-XX:MaxDirectMemorySize=2703m
+		-Djava.net.preferIPv4Stack=true
+
+STEP 6:
+INSTALL SERVICE
+     sudo nano /etc/systemd/system/nexus.service
+
+[Unit]
+Description=nexus service
+After=network.target
+
+[Service]
+Type=forking
+LimitNOFILE=65536
+ExecStart=/opt/nexus/bin/nexus start
+ExecStop=/opt/nexus/bin/nexus stop
+User=nexus
+Restart=on-abort
+
+[Install]
+WantedBy=multi-user.target
+
+STEP 7:
+START NEXUS
+     sudo systemctl start nexus
+     sudo systemctl enable nexus
+     sudo systemctl status nexus
+
+
+STEP 8:
+INSTALL NGINX FOR REVERSE PROXY
+
+        sudo apt install nginx -y
+   	sudo vi /etc/nginx/sites-available/nexus
+server {
+    listen 80;
+    server_name nexus.example.com;  # Change to your domain or IP
+
+    location / {
+        proxy_pass http://localhost:8081;
+        proxy_set_header   Host $host;
+        proxy_set_header   X-Real-IP $remote_addr;
+        proxy_set_header   X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header   X-Forwarded-Proto $scheme;
+        proxy_buffering off;
+    }
+}
+
+     sudo ln -s /etc/nginx/sites-available/nexus /etc/nginx/sites-enabled/
+     sudo nginx -t
+     sudo systemctl reload nginx
+
+STEP 9:
+PASSWORD FOR ADMIN
+     sudo cat /opt/sonatype-work/nexus3/admin.password
+
+STEP 10 :
+DEPLOY THE CODE IN NEXUS 
+
+i)INSTALL MVN
+II)INSTALL GIT 
+
+
+     cd /opt
+     cd apache-maven-3.9.10/
+     cd conf/
+     sudo vi settings.xml
+    <server>
+      <id>nexus</id>
+      <username>admin</username>
+      <password>Junnu143</password>
+    </server>
+
+ vi Sonar-Project/pom.xml
+   ADD MVN-RELAESE URL 
+   ADD MVN-SNAPSORT URL
+
+   13  mvn deploy
+   14  cd Sonar-Project/
+   15  mvn deploy
+
+ ___________________________COMPLETED NEXUS INSTALLATION______________________________
