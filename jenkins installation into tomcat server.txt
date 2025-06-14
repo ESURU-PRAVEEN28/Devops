@@ -1,0 +1,13 @@
+1  wget https://dlcdn.apache.org/tomcat/tomcat-9/v9.0.106/bin/apache-tomcat-9.0.106.tar.gz
+    2  tar xf apache-tomcat-9.0.106.tar.gz
+    3  cd apache-tomcat-9.0.106//bin/
+    4  pwd
+    5  vi /etc/profile
+    6  export CATALINA_HOME=/root/apache-tomcat-9.0.106/
+    7  export PATH=$PATH:/root/apache-tomcat-9.0.106/bin
+    8  startup.sh
+    9  cd ..
+   10  cd webapps/
+   11  wget https://get.jenkins.io/war-stable/2.346.1/jenkins.war
+   12  ls
+   13  history

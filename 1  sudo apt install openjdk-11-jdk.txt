@@ -1,0 +1,42 @@
+ 1  sudo apt install openjdk-11-jdk -y
+    2  sudo apt update
+    3  sudo apt install openjdk-11-jdk -y
+    4  sudo useradd -M -d /opt/nexus nexus
+    5  cd /opt
+    6  sudo wget https://download.sonatype.com/nexus/3/latest-unix.tar.gz
+    7  ls
+    8  ls -a
+    9  sudo wget https://download.sonatype.com/nexus/3/nexus-3.63.0-01-unix.tar.gz
+   10  ls
+   11  tar -xvzf nexus-3.63.0-01-unix.tar.gz
+   12  ls
+   13  tar -xvf nexus-3.63.0-01-unix.tar.gz
+   14  ls
+   15  sudo tar -xvzf nexus-3.63.0-01-unix.tar.gz
+   16  ls
+   17  sudo mv nexus-3.* nexus
+   18  sudo adduser nexus
+   19  sudo passwd nexus
+   20  sudo mv /home/nexus /opt
+   21  su nexus
+   22  sudo apt-get update
+   23  sudo apt install openjdk-8-jre-headless
+   24  cd /opt
+   25  sudo wget https://download.sonatype.com/nexus/3/latest-unix.tar.gz
+   26  tar -zxvf latest-unix.tar.gz
+   27  ls
+   28  sudo visudo
+   29  sudo chown -R nexus:nexus /opt/nexus
+   30  sudo chown -R nexus:nexus /opt/sonatype-work
+   31  sudo nano /opt/nexus/nexus-3.63.0-01/bin/nexus.rc
+   32  sudo vi /opt/nexus/bin/nexus.vmoptions file
+   33  sudo vi /opt/nexus/nexus-3.63.0-01/bin/nexus.vmoptions file
+   34  sudo vi /opt/nexus/nexus-3.63.0-01/bin/nexus.vmoptions 
+   35  sudo nano /etc/systemd/system/nexus.service
+   36  sudo systemctl start nexus
+   37  systemctl daemon-reload'
+   38  systemctl daemon-reload
+   39  sudo systemctl start nexus
+   40  sudo systemctl enable nexus
+   41  sudo systemctl status nexus
+   42  history

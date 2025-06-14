@@ -1,0 +1,12 @@
+  2  sudo wget -O /etc/yum.repos.d/jenkins.repo     https://pkg.jenkins.io/redhat-stable/jenkins.repo
+    3  sudo rpm --import https://pkg.jenkins.io/redhat-stable/jenkins.io-2023.key
+    4  sudo yum upgrade
+    5  sudo yum install java-17-amazon-corretto-headless
+    6  sudo yum install Jenkins
+	sudo yum install git -y
+    7  sudo systemctl daemon-reload
+    8  sudo systemctl enable jenkins
+    9  sudo systemctl start jenkins
+   10  sudo systemctl status jenkins
+   11  cat /var/lib/jenkins/secrets/initialAdminPassword
+   12  sudo cat /var/lib/jenkins/secrets/initialAdminPassword
